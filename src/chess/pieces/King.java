@@ -30,50 +30,50 @@ public class King extends ChessPiece{
 		
 		//ABOVE
 		p.setValues(position.getRow()-1, position.getColumn());
-			if(getBoard().positionExistis(p) && canMove(p)) {
+			if(getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] =true;
 		}
 	
 		//BELLOW
 		p.setValues(position.getRow()+1, position.getColumn());
-			if(getBoard().positionExistis(p) && canMove(p)) {
+			if(getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] =true;
 		}
 			
 		//LEFT
 		p.setValues(position.getRow(), position.getColumn()-1);
-			if(getBoard().positionExistis(p) && canMove(p)) {
+			if(getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] =true;
 			}
 	
 		//RIGHT
 		p.setValues(position.getRow(), position.getColumn()+1);
-			if(getBoard().positionExistis(p) && canMove(p)) {
+			if(getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] =true;
 			}
 	
 		//NORTHWEST (NOROESTE)
 		p.setValues(position.getRow()-1, position.getColumn()-1);
-			if(getBoard().positionExistis(p) && canMove(p)) {
+			if(getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] =true;
 			}
 		
 		//NORTH EAST (NORDESTE)
 		p.setValues(position.getRow()-1, position.getColumn()+1);
-			if(getBoard().positionExistis(p) && canMove(p)) {
+			if(getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] =true;
 			}
 		
 			
 		//SOUTH-WEST (SUDOESTE)
 		p.setValues(position.getRow()+1, position.getColumn()-1);
-			if(getBoard().positionExistis(p) && canMove(p)) {
+			if(getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] =true;
 			}
 			
 		//SOUTHEAST(SUDESTE)
 		p.setValues(position.getRow()+1, position.getColumn()+1);
-			if(getBoard().positionExistis(p) && canMove(p)) {
+			if(getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] =true;
 			}	
 			
