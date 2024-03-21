@@ -34,6 +34,10 @@ public class ChessMatch {
 	public Color getCurrentPlayer() {
 		return currentPlayer;
 	}
+	
+	public boolean getCheck() {
+		return check;
+	}
 
 	public ChessPiece[][] getPieces() {
 		ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColumns()];
@@ -57,6 +61,14 @@ public class ChessMatch {
 		validateSourcePosition(source);
 		validateTargetPosition(source,target);
 		Piece capturedPiece = makeMove(source, target);
+		
+		if (testCheck(currentPlayer)) {
+			undoMove(source,target,capturedPiece);
+			throw new ChessException(" You cant put yourself in check O.o");
+		}
+		
+		check = (testCheck(opponent(currentPlayer)))? true : false;
+		
 		nextTurn();
 		return (ChessPiece)capturedPiece;	
 	}
@@ -81,6 +93,7 @@ public class ChessMatch {
 		if (capturedPiece != null) {
 			board.placePiece(capturedPiece, target);
 			capturedPieces.remove(capturedPiece);
+			piecesOnTheBoard.add(capturedPiece);
 			
 		}
 	}
@@ -104,10 +117,10 @@ public class ChessMatch {
 		}
 	
 		private Color opponent(Color color) {
-			return (color == color.WHITE) ? Color.BLACK : Color.WHITE;
-		}
+			return (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
+		} 
 		
-		private ChessPiece King(Color color) {
+		private ChessPiece king(Color color) {
 			List<Piece> list = piecesOnTheBoard.stream().filter(x->((ChessPiece)x).getColor()==color).collect(Collectors.toList());
 			for (Piece p: list) {
 				if(p instanceof King) {
@@ -117,6 +130,18 @@ public class ChessMatch {
 			throw new IllegalStateException("there is no "+color+ " king on the board");
 		}
 		
+		
+		private boolean testCheck(Color color) {
+		    Position kingPosition = king(color).getChessPosition().toPosition();
+		    List<Piece> opponentPieces = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == opponent(color)).collect(Collectors.toList());
+		    for (Piece p : opponentPieces) {
+		        boolean[][] mat = p.possibleMoves();
+		        if (mat[kingPosition.getRow()][kingPosition.getColumn()]) {
+		            return true;
+		        }
+		    }
+		    return false;
+		}
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
 		piecesOnTheBoard.add(piece);
